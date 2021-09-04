@@ -28,13 +28,11 @@ public class CarritoController {
     @PostMapping(value = "/carrito")
     public ResponseEntity<?> crearCarrito(@PathVariable("id") Long idU, @Valid @RequestBody Carrito carrito) {
         Usuario user = usuarioRepository.getById(idU);
-        //Cierro los carritos activos (true) ->
         for (Carrito detalle:user.getCarritos()) {
             if (detalle.isEstado()) {
                 detalle.setEstado(false);
             }
         }
-        // -> Para crear un nuevo carrito
         carrito.setUsuario(user);
         return new ResponseEntity<>(carritoRepository.save(carrito), HttpStatus.CREATED);
     }
@@ -100,7 +98,6 @@ public class CarritoController {
     @GetMapping(value = "/carrito/{idC}")
     public Carrito checkout(@PathVariable("idC") Long idC) {
         Carrito carrito = carritoRepository.getById(idC);
-        //Carrito activo con, por lo menos, un elemento
         if (carrito.isEstado() && (carrito.getLineasCarrito().size()) >= 1) {
             carrito.setEstado(false);
             carritoRepository.save(carrito);

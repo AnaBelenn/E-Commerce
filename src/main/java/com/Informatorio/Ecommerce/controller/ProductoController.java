@@ -42,7 +42,7 @@ public class ProductoController {
 
     //Modificar datos del producto
     @PutMapping(value = "/producto/{id}")
-    public Producto editarProducto(@PathVariable("id") Long id, Producto prod){
+    public Producto editarProducto(@PathVariable("id") Long id, @Valid @RequestBody Producto prod){
         Producto nuevo_prod = productoRepository.getById(id);
         nuevo_prod.setNombre(prod.getNombre());
         nuevo_prod.setDescripcion(prod.getDescripcion());
