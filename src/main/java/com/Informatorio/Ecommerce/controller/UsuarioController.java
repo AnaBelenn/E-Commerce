@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,7 +44,7 @@ public class UsuarioController {
 
     //Modificar datos del usuario
     @PutMapping(value = "/usuario/{id}")
-    public Usuario editarUsuario(@PathVariable("id") Long id, Usuario user){
+    public Usuario editarUsuario(@PathVariable("id") Long id, @Valid @RequestBody Usuario user){
         Usuario nuevo_user = usuarioRepository.getById(id);
         nuevo_user.setNombre(user.getNombre());
         nuevo_user.setApellido(user.getApellido());
