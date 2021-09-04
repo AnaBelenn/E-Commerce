@@ -1,9 +1,6 @@
 package com.Informatorio.Ecommerce.controller;
 
-import com.Informatorio.Ecommerce.domain.Carrito;
-import com.Informatorio.Ecommerce.domain.Linea_carrito;
-import com.Informatorio.Ecommerce.domain.Producto;
-import com.Informatorio.Ecommerce.domain.Usuario;
+import com.Informatorio.Ecommerce.domain.*;
 import com.Informatorio.Ecommerce.repository.CarritoRepository;
 import com.Informatorio.Ecommerce.repository.ProductoRepository;
 import com.Informatorio.Ecommerce.repository.UsuarioRepository;
@@ -98,8 +95,19 @@ public class CarritoController {
         return carritoRepository.findByEstadoTrue();
     }
 
-    //Checkout Carrito
 
+    //CORREGIR - Checkout Carrito -> devolver detalle de la ORDEN
+    @GetMapping(value = "/carrito/{idC}")
+    public Carrito checkout(@PathVariable("idC") Long idC) {
+        Carrito carrito = carritoRepository.getById(idC);
+        //Carrito activo con, por lo menos, un elemento
+        if (carrito.isEstado() && (carrito.getLineasCarrito().size()) >= 1) {
+            carrito.setEstado(false);
+            carritoRepository.save(carrito);
+            return detalleCarrito(idC);
+        }
+        return null;
+    }
 
 
 }
