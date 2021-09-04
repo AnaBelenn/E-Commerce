@@ -8,8 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class UsuarioController {
@@ -38,8 +40,7 @@ public class UsuarioController {
     //Borrar usuario
     @DeleteMapping(value = "/usuario/{id}")
     public void eliminarUsuario(@PathVariable("id") Long id){
-        Usuario user = usuarioRepository.getById(id);
-        usuarioRepository.delete(user);
+        usuarioRepository.deleteById(id);
     }
 
     //Modificar datos del usuario
@@ -63,8 +64,8 @@ public class UsuarioController {
     }
 
     //Usuarios creados luego de una fecha dada
-    @GetMapping(value = "/usuario/ciudad")
-    public List<Usuario> usuariosDesdeFecha(@RequestParam Date desdeFecha){
-        return usuarioRepository.getByDesdeFecha(desdeFecha);
+    @GetMapping(value = "/usuario/desdeFecha")
+    public Optional<Usuario> usuariosDesdeFecha(@RequestParam LocalDate desdeFecha){
+        return usuarioRepository.getByFechaCreacion(desdeFecha);
     }
 }

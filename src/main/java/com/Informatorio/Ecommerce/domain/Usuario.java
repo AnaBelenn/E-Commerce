@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class Usuario {
     private String direccion;
 
     @CreationTimestamp
-    private LocalDateTime FechaCreacion;
+    private LocalDate fechaCreacion;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("usuario")
@@ -45,6 +46,10 @@ public class Usuario {
     private String provincia;
 
     private String pais;
+
+    @OneToMany
+    @JoinColumn(name = "id_usuario")
+    private List<Orden> ordenes;
 
     //Setters
     public void setIdU(Long idU) {
@@ -71,8 +76,8 @@ public class Usuario {
         this.direccion = direccion;
     }
 
-    public void setFechaCreacion(LocalDateTime fechaCreacion) {
-        FechaCreacion = fechaCreacion;
+    public void setFechaCreacion(LocalDate fechaCreacion) {
+        fechaCreacion = fechaCreacion;
     }
 
     public void setCarritos(List<Carrito> carritos) {
@@ -112,8 +117,8 @@ public class Usuario {
         return direccion;
     }
 
-    public LocalDateTime getFechaCreacion() {
-        return FechaCreacion;
+    public LocalDate getFechaCreacion() {
+        return fechaCreacion;
     }
 
     public List<Carrito> getCarritos() {
