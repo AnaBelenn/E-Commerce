@@ -75,7 +75,7 @@ public class CarritoController {
 
     //-> Elimino una Linea del carrito
     @DeleteMapping(value = "/carrito/{idC}/linea/{idL}")
-    public ResponseEntity<?> eliminarProducto(@PathVariable("idC") Long idC,
+    public ResponseEntity<?> eliminarLinea(@PathVariable("idC") Long idC,
                                               @PathVariable("idL") Long idL){
         Carrito carrito = carritoRepository.getById(idC);
         List<Linea_carrito> lineasCarrito = carrito.getLineasCarrito();
