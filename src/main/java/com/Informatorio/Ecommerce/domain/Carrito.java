@@ -40,6 +40,7 @@ public class Carrito {
     @NotBlank
     private boolean estado;
 
+    // Setters & Getters
     public Long getIdC() {
         return idC;
     }
@@ -102,11 +103,10 @@ public class Carrito {
         }
     }
 
-    //Calculo del total
     public float totalFinal(){
         float total = 0;
-        for (Linea_carrito prod:this.lineasCarrito){
-            total += prod.getSubtotal();
+        for (Linea_carrito linea : this.lineasCarrito){
+            total += linea.getPrecioFinal();
         }
         return total;
     }
