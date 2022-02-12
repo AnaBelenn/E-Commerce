@@ -25,8 +25,8 @@ public class CarritoController {
     }
 
     //Creacion de un carrito
-    @PostMapping(value = "/carrito")
-    public ResponseEntity<?> crearCarrito(@PathVariable("id") Long idU, @Valid @RequestBody Carrito carrito) {
+    @PostMapping(value = "/usuario/{idU}/carrito")
+    public ResponseEntity<?> crearCarrito(@PathVariable("idU") Long idU, @Valid @RequestBody Carrito carrito) {
         Usuario user = usuarioRepository.getById(idU);
         for (Carrito detalle:user.getCarritos()) {
             if (detalle.isEstado()) {
@@ -44,14 +44,14 @@ public class CarritoController {
     }
 
     //Detalle del carrito
-    @GetMapping(value = "/carrito/{id}")
-    public Carrito detalleCarrito(@PathVariable("id") Long id){
+    @GetMapping(value = "/carrito/{idC}")
+    public Carrito detalleCarrito(@PathVariable("idC") Long id){
         return carritoRepository.getById(id);
     }
 
 
     //Eliminar un carrito
-    @DeleteMapping(value = "usuario/{id}/carrito/{idC}")
+    @DeleteMapping(value = "/carrito/{idC}")
     public void borrarCarrito(@PathVariable("idC") Long idC){
         carritoRepository.deleteById(idC);
     }
@@ -59,12 +59,12 @@ public class CarritoController {
 
     //Modifico un carrito agregando/borrando lineasCarrito
     //-> Agrego Linea de producto al carrito
-    @PutMapping(value = "/carrito/{idC}")
+    @PutMapping(value = "/carrito/{idC}/producto/{idP}")
     public ResponseEntity<?> agregarProducto(@PathVariable("idC") Long idC,
-                                             @Valid @RequestBody Producto prod,
-                                            Integer cantidad){
+                                             @PathVariable("idP") Long idP,
+                                             @RequestParam int cantidad){
         Carrito carrito = carritoRepository.getById(idC);
-        Producto producto = productoRepository.getById(prod.getIdP());
+        Producto producto = productoRepository.getById(idP);
         Linea_carrito linea_carrito = new Linea_carrito();
         linea_carrito.setCarrito(carrito);
         linea_carrito.setProducto(producto);
