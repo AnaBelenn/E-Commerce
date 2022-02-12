@@ -19,11 +19,12 @@ public class Linea_carrito {
     @NotBlank
     private Integer cantidad;
 
-    private float precioUnitario;
+    private float precioFinal;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Orden orden;
 
+    //Setters & Getters
     public Orden getOrden() {
         return orden;
     }
@@ -64,15 +65,13 @@ public class Linea_carrito {
         this.cantidad = cantidad;
     }
 
-    public float getPrecioUnitario() {
-        return precioUnitario;
+    public float getPrecioFinal() {
+        return precioFinal;
     }
 
-    public void setPrecioUnitario(float precioUnitario) {
-        this.precioUnitario = producto.getPrecio();
+    public void setPrecioFinal(float precioFinal) {
+        this.precioFinal = producto.getPrecio() * this.cantidad;
     }
 
-    public float getSubtotal(){
-        return cantidad*precioUnitario;
-    }
+
 }
