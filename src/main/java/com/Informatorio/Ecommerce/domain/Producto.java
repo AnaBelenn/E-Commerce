@@ -29,6 +29,8 @@ public class Producto {
 
     private Boolean publicado;
 
+
+    // Setters & Getters
     public Long getIdP() {
         return idP;
     }
@@ -85,6 +87,18 @@ public class Producto {
         this.publicado = publicado;
     }
 
+
+    // Constructores
     public Producto() {
+    }
+
+    public Producto(Long idP, String nombre, String descripcion, float precio, String contenido, LocalDateTime fechaDeCreacion, Boolean publicado) {
+        this.idP = idP;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.precio = precio;
+        this.contenido = contenido;
+        FechaDeCreacion = fechaDeCreacion;
+        this.publicado = publicado;
     }
 }
